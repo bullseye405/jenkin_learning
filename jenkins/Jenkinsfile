@@ -1,0 +1,34 @@
+pipeline {
+    agent { node { label 'built-in' } }
+    stages {
+        stage('git clone') {
+            steps {
+                checkout(
+                    [
+                        $class: 'GitSCM', 
+                        branches: [[name: '*/development']], 
+                        extensions: [], 
+                        userRemoteConfigs: [
+                            [url: 'https://github.com/bullseye405/jenkin_learning.git']
+                        ]
+                    ]
+                )
+            } 
+        }
+
+        stage('Build') { 
+            steps {
+                nodejs(nodeJSInstallationName: 'node') { 
+                    sh '''
+                    yarn install
+                    yarn build '''
+                } 
+            }
+        } 
+        stage('Deploy') {
+            steps { sh '''
+                /var/lib/jenkins/scripts/ocas-frontend.sh
+            ''' }
+        } 
+    }
+}

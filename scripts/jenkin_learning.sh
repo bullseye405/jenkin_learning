@@ -1,3 +1,3 @@
-docker build -t react-frontend /var/lib/jenkins/workspace/Frontend/
-
-docker run -it -d --restart always --name jenkin-react -p 3000:3000 jenkin-react:latest
+if [ $(docker inspect -f '{{.Name}}' ocas-frontend) = "/ocas-frontend" ]; then docker rm -f ocas-frontend; fi
+if [ ! -z "$(docker images -q ocas-frontend:latest)" ]; then docker rmi -f ocas-frontend:latest; fi
+docker compose -f docker-compose.stag.yml up -d
