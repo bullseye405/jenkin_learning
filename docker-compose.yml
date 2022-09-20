@@ -1,8 +1,8 @@
 version: '3.2'
 services:
   jenkin-react:
-    image: jenkin-react
-    container_name: jenkin-react
+    image: jenkins-learning
+    container_name: jenkins-learning
     build: 
       context: .
       dockerfile: Dockerfile
